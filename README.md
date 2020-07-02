@@ -1,1 +1,1 @@
-#Stryber Log Handler for Laravel
+# Stryber Log Handler for Laravel
