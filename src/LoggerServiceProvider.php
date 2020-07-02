@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Stryber\Logger;
+
 use Illuminate\Support\ServiceProvider;
 
 final class LoggerServiceProvider extends ServiceProvider
