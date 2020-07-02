@@ -1,0 +1,26 @@
+{
+  "name": "stryber/laravel-log-handler",
+  "description": "Stryber Laravel Log Handler for Laravel Framework",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Naidenko Dmytro",
+      "email": "dmitryi@stryber.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "graylog2/gelf-php": "^1.6",
+    "illuminate/contracts": "^7.0",
+    "illuminate/log": "^7.0",
+    "ramsey/uuid": "^4.0",
+    "stryber/laravel-uuid-helper": "^0.0.4",
+    "illuminate/http": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Stryber\\Logger\\": "src/"
+    }
+  }
+}
