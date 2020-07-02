@@ -22,5 +22,12 @@
     "psr-4": {
       "Stryber\\Logger\\": "src/"
     }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Stryber\\Logger\\LoggerServiceProvider"
+      ]
+    }
   }
 }

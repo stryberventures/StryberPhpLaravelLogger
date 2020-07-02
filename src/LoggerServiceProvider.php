@@ -10,7 +10,7 @@ final class LoggerServiceProvider extends ServiceProvider
     {
         $this->publishes(
             [
-                __DIR__ . '../config/logging.php' => $this->app->configPath('logging.php'),
+                __DIR__ . '/../config/logging.php' => $this->app->configPath('logging.php'),
             ]
         );
     }
