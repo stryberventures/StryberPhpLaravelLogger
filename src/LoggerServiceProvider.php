@@ -16,7 +16,8 @@ final class LoggerServiceProvider extends ServiceProvider
             [
                 __DIR__ . '/../config/stryber-logging.php' => $this->app->configPath('stryber-logging.php'),
                 __DIR__ . '/../config/stryber-logging-middleware.php' => $this->app->configPath('stryber-logging-middleware.php'),
-            ]
+            ],
+            'stryber-logging'
         );
     }
 
