@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stryber\Logger;
 
+use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,6 +21,11 @@ final class LoggerMiddleware
         $this->ignoreHeaders = $ignoreHeaders;
         $this->ignoreRequestParams = $ignoreRequestParams;
         $this->ignoreResponseParams = $ignoreResponseParams;
+    }
+
+    public function handle(Request $request, Closure $next)
+    {
+        return $next($request);
     }
 
     public function terminate(Request $request, Response $response): void
