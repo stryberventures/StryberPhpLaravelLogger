@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stryber\Logger;
 
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 final class LoggerServiceProvider extends ServiceProvider
@@ -48,5 +49,10 @@ final class LoggerServiceProvider extends ServiceProvider
                 ->needs($param)
                 ->give($config->get($configPath));
         }
+
+        $this->app->singleton(LoggerMiddleware::class);
+        /** @var Router $router */
+        $router = $this->app['router'];
+        $router->aliasMiddleware('log', LoggerMiddleware::class);
     }
 }
