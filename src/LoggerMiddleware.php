@@ -11,10 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class LoggerMiddleware
 {
-    private array $ignoreHeaders = [
-        'cookie',
-        'authorization',
-    ];
+    private array $ignoreHeaders;
+    private array $ignoreRequestParams;
+    private array $ignoreResponseParams;
+
+    public function __construct(array $ignoreHeaders, array $ignoreRequestParams, array $ignoreResponseParams)
+    {
+        $this->ignoreHeaders = $ignoreHeaders;
+        $this->ignoreRequestParams = $ignoreRequestParams;
+        $this->ignoreResponseParams = $ignoreResponseParams;
+    }
 
     public function terminate(Request $request, Response $response): void
     {
@@ -28,16 +34,16 @@ final class LoggerMiddleware
             Log::channel()->error("", $context);
     }
 
-    private function clearHeaders(array $headers): array
+    private function cleanContext(array $context, array $ignore): array
     {
-        return array_diff_key($headers, array_flip($this->ignoreHeaders));
+        return array_diff_key($context, array_flip($ignore));
     }
 
     private function getRequestContext(Request $request): array
     {
         return [
-            'request_headers' => $this->clearHeaders($request->headers->all()),
-            'request_data' => $request->all(),
+            'request_headers' => $this->cleanContext($request->headers->all(), $this->ignoreHeaders),
+            'request_data' => $this->cleanContext($request->all(), $this->ignoreRequestParams),
             'route' => $request->route()->uri,
         ];
     }
@@ -49,7 +55,8 @@ final class LoggerMiddleware
         ];
 
         if ($response->getStatusCode() >= 400) {
-            $responseContext['response_data'] = $this->resolveResponseData($response);
+            $responseData = $this->resolveResponseData($response);
+            $responseContext['response_data'] = $this->cleanContext($responseData, $this->ignoreResponseParams);
         }
 
         return $responseContext;
