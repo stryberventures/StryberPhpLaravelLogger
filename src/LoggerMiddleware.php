@@ -56,7 +56,12 @@ final class LoggerMiddleware
 
         if ($response->getStatusCode() >= 400) {
             $responseData = $this->resolveResponseData($response);
-            $responseContext['response_data'] = $this->cleanContext($responseData, $this->ignoreResponseParams);
+
+            if (is_array($responseData)) {
+                $responseContext = $this->cleanContext($responseData, $this->ignoreResponseParams);
+            }
+
+            $responseContext['response_data'] = $responseData;
         }
 
         return $responseContext;
