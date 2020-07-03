@@ -29,6 +29,7 @@ final class LoggerServiceProvider extends ServiceProvider
     private function mergeConfigs(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/stryber-logging.php', 'stryber-logging');
+        $this->mergeConfigFrom(__DIR__ . '/../config/stryber-logging-middleware.php', 'stryber-logging-middleware');
         /** @var Repository $config */
         $config = $this->app['config'];
         $config->set('logging', array_merge($config->get('logging'), $config->get('stryber-logging')));
