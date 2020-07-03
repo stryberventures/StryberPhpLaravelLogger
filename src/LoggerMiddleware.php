@@ -30,8 +30,8 @@ final class LoggerMiddleware
         );
 
         $response->getStatusCode() < 400 ?
-            Log::channel()->info("", $context) :
-            Log::channel()->error("", $context);
+            Log::channel('stdout')->info("", $context) :
+            Log::channel('stderr')->error("", $context);
     }
 
     private function cleanContext(array $context, array $ignore): array
