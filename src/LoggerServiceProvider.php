@@ -7,6 +7,9 @@ namespace Stryber\Logger;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Stryber\Logger\Processors\UuidMonologProcessor;
+use Stryber\Uuid\PersistentUuidGenerator;
+use Stryber\Uuid\UuidGenerator;
 
 final class LoggerServiceProvider extends ServiceProvider
 {
@@ -28,6 +31,7 @@ final class LoggerServiceProvider extends ServiceProvider
         $this->mergeConfigs($config);
         $this->registerCollectors($config);
         $this->registerLoggerMiddleware($config);
+        $this->registerProcessors();
     }
 
     private function mergeConfigs(Repository $config): void
@@ -53,8 +57,6 @@ final class LoggerServiceProvider extends ServiceProvider
 
     private function registerLoggerMiddleware(Repository $config): void
     {
-        /** @var Repository $config */
-        $config = $this->app['config'];
         $this->app->when(LoggerMiddleware::class)
             ->needs('$requestCollectors')
             ->give($config->get('stryber-logging-middleware.middleware.collectors.request'));
@@ -65,5 +67,12 @@ final class LoggerServiceProvider extends ServiceProvider
         /** @var Router $router */
         $router = $this->app['router'];
         $router->aliasMiddleware('log', LoggerMiddleware::class);
+    }
+
+    private function registerProcessors(): void
+    {
+        $this->app->when(UuidMonologProcessor::class)
+            ->needs(UuidGenerator::class)
+            ->give(PersistentUuidGenerator::class);
     }
 }

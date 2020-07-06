@@ -15,7 +15,7 @@
     "illuminate/contracts": "^7.0",
     "illuminate/log": "^7.0",
     "ramsey/uuid": "^4.0",
-    "stryber/laravel-uuid-helper": "^0.0.4",
+    "stryber/laravel-uuid-helper": "^0.1",
     "illuminate/http": "^7.0"
   },
   "autoload": {
