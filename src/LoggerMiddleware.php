@@ -53,8 +53,11 @@ final class LoggerMiddleware
 
     private function pass(Passable $passable, array $pipes): array
     {
-        return $this->pipeline->send($passable)
+        /** @var Passable $passed */
+        $passed = $this->pipeline->send($passable)
             ->through($pipes)
             ->thenReturn();
+
+        return $passed->output;
     }
 }
