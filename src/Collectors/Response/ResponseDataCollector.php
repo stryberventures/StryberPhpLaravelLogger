@@ -27,7 +27,7 @@ final class ResponseDataCollector extends CleaningCollector
     private function resolveResponseData(Response $response): array
     {
         return $response instanceof JsonResponse ?
-            $response->getData():
+            $response->getData(true):
             [$response->getContent()];
     }
 }
