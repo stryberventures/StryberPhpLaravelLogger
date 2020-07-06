@@ -38,8 +38,13 @@ final class LoggerServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/stryber-logging.php', 'stryber-logging');
         $this->mergeConfigFrom(__DIR__ . '/../config/stryber-logging-middleware.php', 'stryber-logging-middleware');
-
-        $config->set('logging', array_merge($config->get('logging'), $config->get('stryber-logging')));
+        $config->set(
+            'logging',
+            array_merge_recursive(
+                $config->get('logging'),
+                $config->get('stryber-logging')
+            )
+        );
     }
 
     private function registerCollectors(Repository $config): void
