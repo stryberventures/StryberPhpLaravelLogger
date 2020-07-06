@@ -23,35 +23,44 @@ final class LoggerServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->mergeConfigs();
-        $this->registerLoggerMiddleware();
+        /** @var Repository $config */
+        $config = $this->app['config'];
+        $this->mergeConfigs($config);
+        $this->registerCollectors($config);
+        $this->registerLoggerMiddleware($config);
     }
 
-    private function mergeConfigs(): void
+    private function mergeConfigs(Repository $config): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/stryber-logging.php', 'stryber-logging');
         $this->mergeConfigFrom(__DIR__ . '/../config/stryber-logging-middleware.php', 'stryber-logging-middleware');
-        /** @var Repository $config */
-        $config = $this->app['config'];
+
         $config->set('logging', array_merge($config->get('logging'), $config->get('stryber-logging')));
     }
 
-    private function registerLoggerMiddleware(): void
+    private function registerCollectors(Repository $config): void
+    {
+        $collectors = $config->get('stryber-logging-middleware.collectors');
+
+        foreach ($collectors as $collector => $collectorConfig) {
+            foreach ($collectorConfig as $variableName => $value) {
+                $this->app->when($collector)
+                    ->needs("\${$variableName}")
+                    ->give($value);
+            }
+        }
+    }
+
+    private function registerLoggerMiddleware(Repository $config): void
     {
         /** @var Repository $config */
         $config = $this->app['config'];
-        $paramsConfig = [
-            '$ignoreHeaders' => 'stryber-logging-middleware.ignore_headers',
-            '$ignoreRequestParams' => 'stryber-logging-middleware.ignore_request_params',
-            '$ignoreResponseParams' => 'stryber-logging-middleware.ignore_response_params'
-        ];
-
-        foreach ($paramsConfig as $param => $configPath) {
-            $this->app->when(LoggerMiddleware::class)
-                ->needs($param)
-                ->give($config->get($configPath));
-        }
-
+        $this->app->when(LoggerMiddleware::class)
+            ->needs('$requestCollectors')
+            ->give($config->get('stryber-logging-middleware.middleware.collectors.request'));
+        $this->app->when(LoggerMiddleware::class)
+            ->needs('$responseCollectors')
+            ->give($config->get('stryber-logging-middleware.middleware.collectors.response'));
         $this->app->singleton(LoggerMiddleware::class);
         /** @var Router $router */
         $router = $this->app['router'];

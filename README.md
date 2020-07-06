@@ -32,8 +32,7 @@ Now you have 2 new config files: ```stryber-logging.php``` and ```stryber-loggin
 The first one, ```stryber-logging.php```, is using to configure laravel logger and will be merged with your ```logging.php``` config.
 In most cases you dont need to change this file, so it's safe to delete or event don't publish.
 
-The second one, ```stryber-logging-middleware.php``` is using for populate ```Stryber\Logger\LoggerMiddleware``` constructor params 
-like keys to be ignored for logging in request headers, user data and response params.
+The second one, ```stryber-logging-middleware.php``` is using for populate ```Stryber\Logger\LoggerMiddleware``` and collectors constructor params.
 It already contains some widely used values, but you can change them to fit your project requirements as you want.
 
 After configuration you will able to use ```Log::channel('stderr')``` for logging errors and ```Log::channel('stdout')``` 
