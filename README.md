@@ -11,7 +11,7 @@
 ## Requirements
 
 - PHP ^7.4
-- Laravel ^7.0
+- Laravel 7.* - 8.*
 
 ## Installation
 

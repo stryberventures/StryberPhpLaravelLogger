@@ -12,11 +12,11 @@
   "require": {
     "php": ">=7.4",
     "graylog2/gelf-php": "^1.6",
-    "illuminate/contracts": "^7.0",
-    "illuminate/log": "^7.0",
+    "illuminate/contracts": ">=7.0",
+    "illuminate/log": ">=7.0",
     "ramsey/uuid": "^4.0",
     "stryber/laravel-uuid-helper": "^1.0",
-    "illuminate/http": "^7.0"
+    "illuminate/http": ">=7.0"
   },
   "autoload": {
     "psr-4": {
