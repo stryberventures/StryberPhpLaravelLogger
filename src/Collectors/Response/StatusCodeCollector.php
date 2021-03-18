@@ -9,7 +9,7 @@ use Stryber\Logger\Collectors\Passable;
 
 final class StatusCodeCollector extends Collector
 {
-    protected function getContext(Passable $passable)
+    protected function getContext(Passable $passable): int
     {
         return $passable->input->getStatusCode();
     }

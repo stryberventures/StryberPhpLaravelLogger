@@ -22,18 +22,14 @@ abstract class Collector
         return $next($passable);
     }
 
-    final private function writeContext(Passable $passable, $context): void
+    private function writeContext(Passable $passable, $context): void
     {
         $passable->output[$this->contextKey] = $context;
     }
 
-    /**
-     * @param Passable $passable
-     * @return mixed
-     */
-    abstract protected function getContext(Passable $passable); //: mixed
+    abstract protected function getContext(Passable $passable): mixed;
 
-    public function getContextKey(): string
+    final public function getContextKey(): string
     {
         return $this->contextKey;
     }

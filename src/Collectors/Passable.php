@@ -9,11 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class Passable
 {
-    /** @var Request|Response */
-    public $input;
+    public Request|Response $input;
     public array $output;
 
-    public function __construct($input, array $output)
+    public function __construct(Request|Response $input, array $output)
     {
         $this->input = $input;
         $this->output = $output;

@@ -10,13 +10,18 @@
     }
   ],
   "require": {
-    "php": ">=7.4",
+    "php": "^8.0",
     "graylog2/gelf-php": "^1.6",
-    "illuminate/contracts": "^7.0",
-    "illuminate/log": "^7.0",
+    "illuminate/contracts": "^8.0",
+    "illuminate/log": "^8.0",
     "ramsey/uuid": "^4.0",
-    "stryber/laravel-uuid-helper": "^1.0",
-    "illuminate/http": "^7.0"
+    "stryber/laravel-uuid-helper": "^8.0",
+    "illuminate/http": "^8.0",
+    "psr/log": "^1.1"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "vimeo/psalm": "^4.6"
   },
   "autoload": {
     "psr-4": {
