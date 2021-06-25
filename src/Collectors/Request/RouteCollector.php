@@ -11,6 +11,6 @@ final class RouteCollector extends Collector
 {
     protected function getContext(Passable $passable): string
     {
-        return $passable->input->route()->uri;
+        return $passable->input->route() ? $passable->input->route()->uri : $passable->input->path();
     }
 }

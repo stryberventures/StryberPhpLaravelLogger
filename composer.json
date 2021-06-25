@@ -9,15 +9,14 @@
       "email": "dmitryi@stryber.com"
     }
   ],
-  "require": {
-    "php": "^8.0",
+"require": {
+    "php": ">=7.4",
     "graylog2/gelf-php": "^1.6",
-    "illuminate/contracts": "^8.0",
-    "illuminate/log": "^8.0",
+    "illuminate/contracts": "^8.12",
+    "illuminate/log": "^8.12",
     "ramsey/uuid": "^4.0",
-    "stryber/laravel-uuid-helper": "^8.0",
-    "illuminate/http": "^8.0",
-    "psr/log": "^1.1"
+    "stryber/laravel-uuid-helper": "^v8.0.0",
+    "illuminate/http": "^8.12"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
