@@ -20,10 +20,6 @@ final class ResponseDataCollector extends CleaningCollector
         return [];
     }
 
-    /**
-     * @param Response $response
-     * @return false|array|string
-     */
     private function resolveResponseData(Response $response): array
     {
         return $response instanceof JsonResponse ?

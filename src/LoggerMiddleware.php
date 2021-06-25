@@ -7,19 +7,25 @@ namespace Stryber\Logger;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
-use Illuminate\Support\Facades\Log;
+use Psr\Log\LoggerInterface;
 use Stryber\Logger\Collectors\Passable;
 use Symfony\Component\HttpFoundation\Response;
 
 final class LoggerMiddleware
 {
     private Pipeline $pipeline;
+    private LoggerInterface $log;
     private array $requestCollectors;
     private array $responseCollectors;
 
-    public function __construct(Pipeline $pipeline, array $requestCollectors, array $responseCollectors)
-    {
+    public function __construct(
+        Pipeline $pipeline,
+        LoggerInterface $log,
+        array $requestCollectors,
+        array $responseCollectors
+    ) {
         $this->pipeline = $pipeline;
+        $this->log = $log;
         $this->requestCollectors = $requestCollectors;
         $this->responseCollectors = $responseCollectors;
     }
@@ -37,8 +43,8 @@ final class LoggerMiddleware
         ];
 
         $response->getStatusCode() < 400 ?
-            Log::channel('stdout')->info("", $context):
-            Log::channel('stderr')->error("", $context);
+            $this->log->info("", $context):
+            $this->log->error("", $context);
     }
 
     private function getRequestContext(Request $request): array

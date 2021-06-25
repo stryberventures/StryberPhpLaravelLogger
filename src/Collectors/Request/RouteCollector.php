@@ -9,7 +9,7 @@ use Stryber\Logger\Collectors\Passable;
 
 final class RouteCollector extends Collector
 {
-    protected function getContext(Passable $passable)
+    protected function getContext(Passable $passable): string
     {
         return $passable->input->route() ? $passable->input->route()->uri : $passable->input->path();
     }

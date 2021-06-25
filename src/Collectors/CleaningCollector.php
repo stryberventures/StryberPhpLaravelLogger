@@ -17,7 +17,7 @@ abstract class CleaningCollector extends Collector
 
     abstract protected function getRawContext(Passable $passable): array;
 
-    final protected function getContext(Passable $passable)
+    final protected function getContext(Passable $passable): array
     {
         return $this->cleanContext($this->getRawContext($passable));
     }

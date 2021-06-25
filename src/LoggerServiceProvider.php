@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Stryber\Logger;
 
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Log\LogManager;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Psr\Log\LoggerInterface;
 use Stryber\Logger\Processors\UuidMonologProcessor;
 use Stryber\Uuid\PersistentUuidGenerator;
 use Stryber\Uuid\UuidGenerator;
@@ -29,6 +31,7 @@ final class LoggerServiceProvider extends ServiceProvider
         /** @var Repository $config */
         $config = $this->app['config'];
         $this->mergeConfigs($config);
+        $this->registerLogger();
         $this->registerCollectors($config);
         $this->registerLoggerMiddleware($config);
         $this->registerProcessors();
@@ -45,6 +48,18 @@ final class LoggerServiceProvider extends ServiceProvider
                 $config->get('stryber-logging')
             )
         );
+    }
+
+    private function registerLogger(): void
+    {
+        /** @var LogManager $log */
+        $log = $this->app['log'];
+        $this->app->bind(LoggerInterface::class, function () use ($log): Logger {
+            return new Logger(
+                $log->channel('stdout'),
+                $log->channel('stderr')
+            );
+        });
     }
 
     private function registerCollectors(Repository $config): void
